@@ -1,0 +1,4 @@
+*.code-workspace
+.vscode
+*.db
+src/backend/files
