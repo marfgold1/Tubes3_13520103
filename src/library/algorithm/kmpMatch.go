@@ -1,6 +1,6 @@
-package main
+package algorithm
 
-func computeFail (pattern string) []int {
+func computeFail(pattern string) []int {
 	/* Return array storing index of last
 	 * occurence of each DNA char in pattern
 	 *
@@ -30,14 +30,13 @@ func computeFail (pattern string) []int {
 	return fail
 }
 
-
-func kmpMatch (text, pattern string) int {
+func KMPMatch(text, pattern string) int {
 	/* Return index of first match of pattern in text,
-	 * or -1 if no match 
+	 * or -1 if no match
 	 *
 	 * Args :
 	 *    text : string to search in
-	 *    pattern : string to search for 
+	 *    pattern : string to search for
 	 * Returns :
 	 *    int : index of first match of pattern in text, or -1 if no match */
 	fail := computeFail(pattern)
@@ -48,7 +47,7 @@ func kmpMatch (text, pattern string) int {
 
 	for end := false; !end; end = i >= n {
 		if pattern[j] == text[i] {
-			if j == m - 1 {
+			if j == m-1 {
 				return i - m + 1
 			} else {
 				i++
