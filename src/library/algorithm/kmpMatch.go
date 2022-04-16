@@ -13,7 +13,7 @@ func computeFail(pattern string) []int {
 
 	m := len(pattern)
 	j := 0
-	i := 0
+	i := 1
 
 	for end := false; !end; end = i >= m {
 		if pattern[i] == pattern[j] {

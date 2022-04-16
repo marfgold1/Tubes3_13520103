@@ -9,5 +9,5 @@ import (
 func main() {
 	// text := "CGGTTCGGTTGCGGTTCCGGTTAT"
 	// pattern := "TTAT"
-	fmt.Println(algorithm.KMPMatch("amer", "ama"))
+	fmt.Println(algorithm.KMPMatch("CGGTTCGGTTGCGGTTCCGGTTAT", "TTAT"))
 }
