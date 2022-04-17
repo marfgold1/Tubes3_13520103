@@ -89,8 +89,10 @@ func createCheck(c echo.Context) error {
 	if err != nil {
 		return err
 	}
-	p.Result = algo.BMMatch(dna_seq, dna_peny) != -1
-	p.Match = 0
+
+	res_idx, match := algo.BFMatch(dna_seq, dna_peny)
+	p.Result = res_idx != -1
+	p.Match = match
 
 	res := databases.DB.Create(&p)
 	if res.Error != nil {
