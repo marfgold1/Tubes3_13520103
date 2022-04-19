@@ -1,0 +1,9 @@
+.formContainer {
+  width: 70vw;
+  min-width: 600px;
+  height: 50vh;
+  min-height: 300px;
+  border-radius: 10%;
+  border: 2px solid #000;
+  padding: 20px;
+}

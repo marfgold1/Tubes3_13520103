@@ -1,0 +1,32 @@
+.container {
+  width: 50vw;
+  min-width: 500px;
+  min-height: 600px;
+  max-height: 80vh;
+  border: 1px solid #000;
+  border-radius: 16px;
+  padding: 30px;
+}
+
+.inputContainer {
+  width: 60%;
+}
+
+.inputContainer > input {
+  width: 100%;
+}
+
+.resContainer {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.resCard {
+  width: 80%;
+  border: 1px solid #000;
+  border-radius: 8px;
+  margin: 10px 0;
+  padding: 10px;
+}
