@@ -26,7 +26,10 @@ const AddPenyakit = () => {
       formData.append("dna", fileDNA);
 
       const res = await new ApiSrv("penyakit/").post(formData);
-      console.log("res", res);
+      if (res) {
+        console.log("res", res);
+        alert("successfully add new penyakit");
+      }
     }
 
     setPenyakit("");

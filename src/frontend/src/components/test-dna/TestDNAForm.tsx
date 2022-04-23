@@ -31,10 +31,12 @@ const TestDNAForm = () => {
       formData.append("penyakit", prediction);
 
       const res: any = await new ApiSrv("check/").post(formData);
-      console.log("res", res);
-      setResult(
-        `${res.data.CreatedAt} - ${res.data.Pengguna} - ${res.data.Penyakit} - ${res.data.Match} - ${res.data.Result}`
-      );
+      if (res) {
+        console.log("res", res);
+        setResult(
+          `${res.data.CreatedAt} - ${res.data.Pengguna} - ${res.data.Penyakit} - ${res.data.Match} - ${res.data.Result}`
+        );
+      }
     }
 
     setName("");

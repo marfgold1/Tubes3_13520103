@@ -23,6 +23,7 @@ class ApiSrv {
     } catch (error) {
       console.log(error);
       alert(error);
+      return null;
     }
   }
 
@@ -43,7 +44,7 @@ class ApiSrv {
     } catch (error) {
       console.log(error);
       alert(error);
-      return error;
+      return null;
     }
   }
 }
