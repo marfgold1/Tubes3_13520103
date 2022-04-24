@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import styles from "./AddPenyakit.module.css";
 import { ApiSrv } from "../../services";
+import { Form, Button } from "react-bootstrap";
 
 const AddPenyakit = () => {
   const [penyakit, setPenyakit] = useState<string>("");
@@ -41,50 +42,29 @@ const AddPenyakit = () => {
   };
 
   return (
-    <form
-      className={
-        styles.formContainer +
-        " d-flex flex-column justify-content-between align-items-center"
-      }
-    >
-      <div className={styles.topForm}>
-        <p className="text-center">Tambahkan Penyakit</p>
-      </div>
-      <div className={styles.centerForm + " d-flex justify-content-between"}>
-        <div className={styles.namaPenyakitInputContainer}>
-          <label>Nama Penyakit</label>
-          <div>
-            <input
-              type="text"
-              className={styles.namaPenyakitInput}
-              value={penyakit}
-              onChange={(e) => setPenyakit(e.target.value)}
-              placeholder="penyakit..."
-            />
-          </div>
+    <div className={styles.container}>
+      <Form>
+        <div className={styles.topForm}>
+          <h2 className="text-center">Tambahkan Penyakit</h2>
         </div>
-        <div className={styles.sequenceDNAInputContainer}>
-          <label>Sequence DNA</label>
-          <div className={styles.uploadFileContainer}>
-            <input
-              type="file"
-              className={styles.sequenceDNAInput}
-              onChange={uploadFile}
-              ref={inputFile}
-            />
-          </div>
-        </div>
-      </div>
-      <div className={styles.bottomForm}>
-        <button
-          type="submit"
-          className={styles.submitButton}
-          onClick={(e) => onSubmit(e)}
-        >
+        <Form.Group className="mb-3" controlId="formNamaPenyakit">
+          <Form.Label>Nama Penyakit</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Masukkan penyakit"
+            value={penyakit}
+            onChange={(e) => setPenyakit(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Upload Sequence DNA</Form.Label>
+          <Form.Control type="file" onChange={uploadFile} ref={inputFile} />
+        </Form.Group>
+        <Button variant="primary" type="submit" onClick={(e) => onSubmit(e)}>
           Submit
-        </button>
-      </div>
-    </form>
+        </Button>
+      </Form>
+    </div>
   );
 };
 

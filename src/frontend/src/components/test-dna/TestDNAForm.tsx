@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-
+import { Form, Button } from "react-bootstrap";
 import { ApiSrv } from "../../services";
 import styles from "./TestDNAForm.module.css";
 
@@ -47,65 +47,44 @@ const TestDNAForm = () => {
       inputFile.current.files = null;
       inputFile.current.value = "";
     }
-
-    // setResult(
-    //   "<Tanggal> - <Pengguna> - <Penyakit> - <similarity> - <True/False>"
-    // );
   };
 
   return (
-    <div className={styles.container}>
-      <form className={styles.formContainer}>
-        <div className={styles.topForm}>
-          <h1 className="text-center">Test DNA</h1>
-        </div>
-        <div
-          className={styles.inputContainer + " d-flex justify-content-between"}
-        >
-          <div className={styles.nameInput}>
-            <label>Nama Pengguna</label>
-            <div className={styles.inputStringContainer}>
-              <input
-                type="text"
-                className={styles.inputString}
-                placeholder="<Pengguna>"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </div>
+    <div className={styles.testDNAContainer}>
+      <div className={styles.topContainer + " mb-4"}>
+        <Form>
+          <div className={styles.topForm}>
+            <h2 className="text-center">Test DNA</h2>
           </div>
-          <div className={styles.dnaInput}>
-            <label>Sequence DNA</label>
-            <div className={styles.inputFileContainer}>
-              <input type="file" ref={inputFile} onChange={uploadFile} />
-            </div>
-          </div>
-          <div className={styles.predictionInput}>
-            <label>Prediksi Penyakit</label>
-            <div className={styles.inputStringContainer}>
-              <input
-                type="text"
-                className={styles.inputString}
-                placeholder="<Penyakit>"
-                value={prediction}
-                onChange={(e) => setPrediction(e.target.value)}
-              />
-            </div>
-          </div>
-        </div>
-        <div
-          className={styles.submitContainer + " d-flex justify-content-center"}
-        >
-          <button className={styles.submitButton} onClick={(e) => submit(e)}>
+          <Form.Group className="mb-3" controlId="formNamaPengguna">
+            <Form.Label>Nama Pengguna</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Masukkan Nama Pengguna"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formSequenceDNA">
+            <Form.Label>Upload Sequence DNA</Form.Label>
+            <Form.Control type="file" onChange={uploadFile} ref={inputFile} />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formPenyakit">
+            <Form.Label>Prediksi Penyakit</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Masukkan Nama Penyakit"
+              value={prediction}
+              onChange={(e) => setPrediction(e.target.value)}
+            />
+          </Form.Group>
+          <Button variant="primary" type="submit" onClick={(e) => submit(e)}>
             Submit
-          </button>
-        </div>
-      </form>
-      <div className={styles.divider + " text-center"}>
-        -------------------------------------
+          </Button>
+        </Form>
       </div>
       <div className={styles.resultContainer}>
-        <p className={styles.resultTitle + " text-center"}>Hasil Tes</p>
+        <h5 className={styles.resultTitle + " text-center"}>Hasil Tes</h5>
         <p className={styles.result + " text-center"}>{result}</p>
       </div>
     </div>

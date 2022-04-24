@@ -1,9 +1,8 @@
-.formContainer {
-  width: 70vw;
-  min-width: 600px;
-  height: 50vh;
-  min-height: 300px;
-  border-radius: 10%;
+.container {
+  width: 65vw;
+  min-width: 500px;
+  min-height: 50vh;
+  border-radius: 3vw;
   border: 2px solid #000;
   padding: 20px;
 }
