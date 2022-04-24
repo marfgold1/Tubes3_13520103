@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/marfgold1/TubesStima3/src/library/utils"
-	"gorm.io/driver/sqlite"
+	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
@@ -18,7 +18,7 @@ var (
 
 func init() {
 	var err error
-	DB, err = gorm.Open(sqlite.Open("databases/data.db"), &gorm.Config{})
+	DB, err = gorm.Open(mysql.Open("stima:fFDzwk4Z!FpU_QU@tcp(127.0.0.1)/tubes3stima?charset=utf8mb4&parseTime=True&loc=Local"), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}

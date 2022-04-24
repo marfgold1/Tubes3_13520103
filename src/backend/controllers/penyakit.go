@@ -18,13 +18,13 @@ var (
 
 func init() {
 	penyakitNotFound = map[string]string{
-		"message": "Penyakit not found",
+		"message": "Penyakit tidak ditemukan",
 	}
 	penyakitBadRequest = map[string]string{
-		"message": "Bad request",
+		"message": "Input salah atau tidak valid",
 	}
 	penyakitDuplicate = map[string]string{
-		"message": "Penyakit already exists",
+		"message": "Penyakit sudah ada di database",
 	}
 	penyakitFolderParent = "penyakit"
 }
