@@ -1,4 +1,4 @@
-interface ISearchRes {
+interface ITestDNARes {
   CreatedAt: string;
   DeletedAt: string | null;
   Penyakit: string;
@@ -6,4 +6,4 @@ interface ISearchRes {
   UpdatedAt: string;
 }
 
-export default ISearchRes;
+export default ITestDNARes;

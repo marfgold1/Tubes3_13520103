@@ -7,7 +7,7 @@ import {
   Dropdown,
 } from "react-bootstrap";
 import { ApiSrv } from "../../services";
-import ISearchRes from "./ISearchRes";
+import ITestDNARes from "./ITestDNARes";
 import styles from "./TestDNAForm.module.css";
 
 const TestDNAForm = () => {
@@ -30,7 +30,7 @@ const TestDNAForm = () => {
     setLoading(false);
 
     if (res) {
-      const lst = res.data.map((datum: ISearchRes) => datum.Penyakit);
+      const lst = res.data.map((datum: ITestDNARes) => datum.Penyakit);
       console.log(lst);
       setListPenyakit(lst);
     }
