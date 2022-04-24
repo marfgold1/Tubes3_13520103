@@ -1,6 +1,13 @@
-import { useState, useRef } from "react";
-import { Form, Button } from "react-bootstrap";
+import { useState, useRef, useEffect } from "react";
+import {
+  Form,
+  Button,
+  Spinner,
+  DropdownButton,
+  Dropdown,
+} from "react-bootstrap";
 import { ApiSrv } from "../../services";
+import ISearchRes from "./ISearchRes";
 import styles from "./TestDNAForm.module.css";
 
 const TestDNAForm = () => {
@@ -8,8 +15,26 @@ const TestDNAForm = () => {
   const [sequenceDNA, setSequenceDNA] = useState<File | undefined>();
   const [prediction, setPrediction] = useState<string>("");
   const [result, setResult] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
+  const [listPenyakit, setListPenyakit] = useState<string[]>([]);
 
   const inputFile = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    getListPenyakit();
+  }, []);
+
+  const getListPenyakit = async () => {
+    setLoading(true);
+    const res = await new ApiSrv("penyakit/").get();
+    setLoading(false);
+
+    if (res) {
+      const lst = res.data.map((datum: ISearchRes) => datum.Penyakit);
+      console.log(lst);
+      setListPenyakit(lst);
+    }
+  };
 
   const uploadFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -51,42 +76,68 @@ const TestDNAForm = () => {
 
   return (
     <div className={styles.testDNAContainer}>
-      <div className={styles.topContainer + " mb-4"}>
-        <Form>
-          <div className={styles.topForm}>
-            <h2 className="text-center">Test DNA</h2>
+      {loading ? (
+        <div className="d-flex justify-content-center align-items-center h-100">
+          <Spinner animation="border" variant="primary" />
+        </div>
+      ) : (
+        <>
+          <div className={styles.topContainer + " mb-4"}>
+            <Form>
+              <div className={styles.topForm}>
+                <h2 className="text-center">Test DNA</h2>
+              </div>
+              <Form.Group className="mb-3" controlId="formNamaPengguna">
+                <Form.Label>Nama Pengguna</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Masukkan Nama Pengguna"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formSequenceDNA">
+                <Form.Label>Upload Sequence DNA</Form.Label>
+                <Form.Control
+                  type="file"
+                  onChange={uploadFile}
+                  ref={inputFile}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formPenyakit">
+                <Form.Label>Prediksi Penyakit</Form.Label>
+                <DropdownButton
+                  id="dropdown-basic-button"
+                  title={prediction ? prediction : "Pilih Nama Penyakit"}
+                >
+                  {listPenyakit.map((penyakit: string, index: number) => {
+                    return (
+                      <Dropdown.Item
+                        key={index}
+                        onClick={() => setPrediction(penyakit)}
+                      >
+                        {penyakit}
+                      </Dropdown.Item>
+                    );
+                  })}
+                </DropdownButton>
+              </Form.Group>
+              <Button
+                variant="primary"
+                type="submit"
+                onClick={(e) => submit(e)}
+                disabled={!name || !prediction || !sequenceDNA}
+              >
+                Submit
+              </Button>
+            </Form>
           </div>
-          <Form.Group className="mb-3" controlId="formNamaPengguna">
-            <Form.Label>Nama Pengguna</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Masukkan Nama Pengguna"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formSequenceDNA">
-            <Form.Label>Upload Sequence DNA</Form.Label>
-            <Form.Control type="file" onChange={uploadFile} ref={inputFile} />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formPenyakit">
-            <Form.Label>Prediksi Penyakit</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Masukkan Nama Penyakit"
-              value={prediction}
-              onChange={(e) => setPrediction(e.target.value)}
-            />
-          </Form.Group>
-          <Button variant="primary" type="submit" onClick={(e) => submit(e)}>
-            Submit
-          </Button>
-        </Form>
-      </div>
-      <div className={styles.resultContainer}>
-        <h5 className={styles.resultTitle + " text-center"}>Hasil Tes</h5>
-        <p className={styles.result + " text-center"}>{result}</p>
-      </div>
+          <div className={styles.resultContainer}>
+            <h5 className={styles.resultTitle + " text-center"}>Hasil Tes</h5>
+            <p className={styles.result + " text-center"}>{result}</p>
+          </div>
+        </>
+      )}
     </div>
   );
 };
