@@ -1,0 +1,40 @@
+.container {
+  gap: 12px;
+  text-align: center;
+}
+
+.itemContainer {
+  background: #E0FFE0;
+  border: 1px solid #000000;
+  border-radius: 12px;
+  padding: 5px 10px;
+  margin: 0px 6px;
+}
+
+.width2 {
+  padding: 5px 40px;
+}
+
+.width3 {
+  padding: 5px 60px;
+}
+
+.false {
+  background-color: #FFE0E0;
+}
+
+.grow0 {
+  flex-grow: 0;
+}
+
+.grow1 {
+  flex-grow: 1;
+}
+
+.grow2 {
+  flex-grow: 2;
+}
+
+.grow3 {
+  flex-grow: 3;
+}

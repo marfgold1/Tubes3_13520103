@@ -7,11 +7,3 @@
   padding: 20px;
 }
 
-.resultContainer {
-  width: 65vw;
-  min-width: 500px;
-  min-height: 100px;
-  border-radius: 3vw;
-  border: 2px solid #000;
-  padding: 12px;
-}

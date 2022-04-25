@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDebouncedCallback } from "use-debounce";
-
+import { Form, Spinner } from "react-bootstrap";
 import { ApiSrv } from "../../services";
-import ISearchRes from "./ISearchRes";
+import ISearchRes from "../../interface/ISearchRes";
 import styles from "./SearchForm.module.css";
+import { SearchResWithIndex } from "..";
 
 const SearchForm = () => {
   const [query, setQuery] = useState("");
@@ -52,7 +53,7 @@ const SearchForm = () => {
       "September",
       "Oktober",
       "November",
-      "Desember"
+      "Desember",
     ];
 
     const date = new Date(data.CreatedAt);
@@ -60,7 +61,9 @@ const SearchForm = () => {
     const month = date.getMonth();
     const day = date.getDate();
 
-    return `${data.Pengguna} ${data.Penyakit} ${day} ${monthNames[month]} ${monthNamesIdn[month]} ${year} ${year}-${month+1}-${day} ${day}-${month+1}-${year}`;
+    return `${data.Pengguna} ${data.Penyakit} ${day} ${monthNames[month]} ${
+      monthNamesIdn[month]
+    } ${year} ${year}-${month + 1}-${day} ${day}-${month + 1}-${year}`;
   };
 
   const formatData = (datum: ISearchRes) => {
@@ -76,7 +79,7 @@ const SearchForm = () => {
       "September",
       "Oktober",
       "November",
-      "Desember"
+      "Desember",
     ];
 
     const date = new Date(datum.CreatedAt);
@@ -85,20 +88,20 @@ const SearchForm = () => {
     const day = date.getDate();
 
     return `${datum.Pengguna} ${datum.Penyakit} ${day} ${monthNamesIdn[month]} ${year} ${datum.Result} ${datum.Match}%`;
-  }
+  };
 
-  const onQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onQueryChange = (e: React.ChangeEvent<any>) => {
     const newQuery = e.target.value;
     setQuery(newQuery);
 
-    const allRegex = newQuery.split(" ").map((query) => {
+    const allRegex = newQuery.split(" ").map((query: string) => {
       return new RegExp(query, "i");
     });
 
     const filteredResults = data.filter((datum) => {
       const str = convertToString(datum);
 
-      return allRegex.every((regex) => {
+      return allRegex.every((regex: RegExp) => {
         return regex.test(str);
       });
     });
@@ -110,28 +113,26 @@ const SearchForm = () => {
   return (
     <div className={styles.container + " d-flex flex-column"}>
       {loading ? (
-        <h1>Loading</h1>
+        <div className="d-flex justify-content-center align-items-center h-100">
+          <Spinner animation="border" variant="primary" />
+        </div>
       ) : (
         <>
-          <div
-            className={
-              styles.topForm +
-              " d-flex flex-column justify-content-center align-items-center"
-            }
-          >
-            <div className={styles.inputContainer}>
-              <input
+          <h2 className="text-center">Search</h2>
+          <Form>
+            <Form.Group className="mb-3" controlId="formSearchQuery">
+              <Form.Control
                 type="text"
-                className={styles.inputString + " text-center"}
                 placeholder="Input your search here"
+                className={styles.input + " text-center my-3 mx-auto"}
                 value={query}
                 onChange={(e) => {
                   setQuery(e.target.value);
                   onTypeChange(e);
                 }}
               />
-            </div>
-          </div>
+            </Form.Group>
+          </Form>
           <div
             className={
               styles.resContainer + " d-flex flex-column align-items-center"
@@ -140,11 +141,7 @@ const SearchForm = () => {
             {results.map((result, idx) => {
               console.log("result", result);
               console.log("idx", idx);
-              return (
-                <div className={styles.resCard} key={idx}>
-                  {idx + 1}. {formatData(result)}
-                </div>
-              );
+              return <SearchResWithIndex data={result} key={idx} idx={idx} />;
             })}
           </div>
         </>

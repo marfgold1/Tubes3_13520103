@@ -1,11 +1,6 @@
 .container {
-  width: 50vw;
-  min-width: 500px;
-  min-height: 600px;
-  max-height: 80vh;
-  border: 1px solid #000;
-  border-radius: 16px;
-  padding: 30px;
+  width: 800px;
+  max-width: 90vw;
 }
 
 .inputContainer {
@@ -14,6 +9,12 @@
 
 .inputContainer > input {
   width: 100%;
+}
+
+.input {
+  width: 50vw;
+  max-width: 600px;
+  min-width: 350px;
 }
 
 .resContainer {

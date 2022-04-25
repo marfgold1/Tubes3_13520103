@@ -1,0 +1,10 @@
+.itemContainer {
+  background: #E0FFE0;
+  border: 1px solid #000000;
+  border-radius: 12px;
+  padding: 5px 10px;
+}
+
+.false {
+  background-color: #FFE0E0;
+}

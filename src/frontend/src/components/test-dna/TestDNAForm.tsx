@@ -7,14 +7,16 @@ import {
   Dropdown,
 } from "react-bootstrap";
 import { ApiSrv } from "../../services";
-import ITestDNARes from "./ITestDNARes";
+import ITestDNARes from "../../interface/ITestDNARes";
+import ISearchRes from "../../interface/ISearchRes";
 import styles from "./TestDNAForm.module.css";
+import { SearchRes } from "..";
 
 const TestDNAForm = () => {
   const [name, setName] = useState<string>("");
   const [sequenceDNA, setSequenceDNA] = useState<File | undefined>();
   const [prediction, setPrediction] = useState<string>("");
-  const [result, setResult] = useState<string>("");
+  const [result, setResult] = useState<ISearchRes>();
   const [loading, setLoading] = useState<boolean>(true);
   const [listPenyakit, setListPenyakit] = useState<string[]>([]);
 
@@ -55,12 +57,11 @@ const TestDNAForm = () => {
       formData.append("dna", sequenceDNA);
       formData.append("penyakit", prediction);
 
-      const res: any = await new ApiSrv("check/").post(formData);
+      const res = await new ApiSrv("check/").post(formData);
       if (res) {
+        const data: ISearchRes = res.data;
         console.log("res", res);
-        setResult(
-          `${res.data.CreatedAt} - ${res.data.Pengguna} - ${res.data.Penyakit} - ${res.data.Match} - ${res.data.Result}`
-        );
+        setResult(data);
       }
     }
 
@@ -82,7 +83,7 @@ const TestDNAForm = () => {
         </div>
       ) : (
         <>
-          <div className={styles.topContainer + " mb-4"}>
+          <div className={styles.topContainer + " mb-4 mx-auto"}>
             <Form>
               <div className={styles.topForm}>
                 <h2 className="text-center">Test DNA</h2>
@@ -134,7 +135,7 @@ const TestDNAForm = () => {
           </div>
           <div className={styles.resultContainer}>
             <h5 className={styles.resultTitle + " text-center"}>Hasil Tes</h5>
-            <p className={styles.result + " text-center"}>{result}</p>
+            {result && <SearchRes data={result} />}
           </div>
         </>
       )}
