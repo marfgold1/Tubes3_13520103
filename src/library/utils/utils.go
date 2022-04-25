@@ -7,6 +7,13 @@ func Min(a, b int) int {
 	return b
 }
 
+func Max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
+
 func GetDnaCode(c byte) int {
 	/* Return DNA code for char c
 	 * A = 0
