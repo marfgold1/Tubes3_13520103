@@ -80,7 +80,7 @@ const SearchRes = ({
             (data.Result ? "" : styles.false)
           }
         >
-          {data.Match}
+          {data.Match + "%"}
         </Col>
         <Col
           className={

@@ -15,7 +15,7 @@ const SearchResWithIndex = ({
 
   return (
     <div className="d-flex justify-content-center my-2 w-100">
-      <div className={styles.itemContainer + " me-2"}>{idx + 1 + "."}</div>
+      <div className={styles.itemContainer + " me-2 " + (data.Result ? "" : styles.false)}>{idx + 1 + "."}</div>
       <SearchRes data={data} className={styles.grow2} />
     </div>
   );

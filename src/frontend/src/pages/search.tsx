@@ -8,7 +8,7 @@ const Search = () => {
       <Navbar />
       <div
         className={
-          styles.content + " d-flex justify-content-center align-items-center"
+          styles.content + " d-flex justify-content-center align-items-center mb-5"
         }
       >
         <SearchForm />
