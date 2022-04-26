@@ -60,14 +60,17 @@ const AddPenyakit = () => {
           <Form.Label>Upload Sequence DNA</Form.Label>
           <Form.Control type="file" onChange={uploadFile} ref={inputFile} />
         </Form.Group>
-        <Button
-          variant="primary"
-          type="submit"
-          onClick={(e) => onSubmit(e)}
-          disabled={!fileDNA || !penyakit}
-        >
-          Submit
-        </Button>
+        <div className="d-flex justify-content-center">
+          <Button
+            variant="primary"
+            type="submit"
+            onClick={(e) => onSubmit(e)}
+            disabled={!fileDNA || !penyakit}
+            className="px-4"
+          >
+            Submit
+          </Button>
+        </div>
       </Form>
     </div>
   );

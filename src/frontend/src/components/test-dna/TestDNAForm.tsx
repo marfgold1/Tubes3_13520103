@@ -19,6 +19,7 @@ const TestDNAForm = () => {
   const [result, setResult] = useState<ISearchRes>();
   const [loading, setLoading] = useState<boolean>(true);
   const [listPenyakit, setListPenyakit] = useState<string[]>([]);
+  const [method, setMethod] = useState<string>("");
 
   const inputFile = useRef<HTMLInputElement>(null);
 
@@ -51,11 +52,12 @@ const TestDNAForm = () => {
     console.log("dna", sequenceDNA);
     console.log("penyakit", prediction);
 
-    if (name && prediction && sequenceDNA) {
+    if (name && prediction && sequenceDNA && method) {
       const formData = new FormData();
       formData.append("pengguna", name);
       formData.append("dna", sequenceDNA);
       formData.append("penyakit", prediction);
+      formData.append("method", method);
 
       const res = await new ApiSrv("check/").post(formData);
       if (res) {
@@ -123,14 +125,35 @@ const TestDNAForm = () => {
                   })}
                 </DropdownButton>
               </Form.Group>
-              <Button
-                variant="primary"
-                type="submit"
-                onClick={(e) => submit(e)}
-                disabled={!name || !prediction || !sequenceDNA}
-              >
-                Submit
-              </Button>
+              <Form.Group className="mb-3" controlId="formPenyakit">
+                <Form.Label>Metode</Form.Label>
+                <DropdownButton
+                  id="dropdown-basic-button"
+                  title={method ? method : "Pilih Metode Test"}
+                >
+                  {["kmp", "bm"].map((method: string, index: number) => {
+                    return (
+                      <Dropdown.Item
+                        key={index}
+                        onClick={() => setMethod(method)}
+                      >
+                        {method}
+                      </Dropdown.Item>
+                    );
+                  })}
+                </DropdownButton>
+              </Form.Group>
+              <div className="d-flex justify-content-center">
+                <Button
+                  variant="primary"
+                  type="submit"
+                  onClick={(e) => submit(e)}
+                  disabled={!name || !prediction || !sequenceDNA || !method}
+                  className="px-4"
+                >
+                  Submit
+                </Button>
+              </div>
             </Form>
           </div>
           <div className={styles.resultContainer}>
