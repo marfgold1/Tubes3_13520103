@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -11,10 +12,11 @@ func kmpRoute(c echo.Context) error {
 	str := c.Param("str")
 	ptr := c.Param("ptr")
 	var res string
-	if algo.KMPMatch(str, ptr) != -1 {
-		res = "Match!"
+	idx, sublen := algo.KMPMatch(str, ptr)
+	if idx != -1 {
+		res = fmt.Sprintf("Match! %f%%", float64(sublen)/float64(len(str))*100.0)
 	} else {
-		res = "Not found!"
+		res = fmt.Sprintf("Not found! %f%%", float64(sublen)/float64(len(str))*100.0)
 	}
 	return c.String(http.StatusOK, res)
 }
@@ -23,10 +25,11 @@ func bmRoute(c echo.Context) error {
 	str := c.Param("str")
 	ptr := c.Param("ptr")
 	var res string
-	if algo.BMMatch(str, ptr) != -1 {
-		res = "Match!"
+	idx, sublen := algo.BMMatch(str, ptr)
+	if idx != -1 {
+		res = fmt.Sprintf("Match! %f%%", float64(sublen)/float64(len(str))*100.0)
 	} else {
-		res = "Not found!"
+		res = fmt.Sprintf("Not found! %f%%", float64(sublen)/float64(len(str))*100.0)
 	}
 	return c.String(http.StatusOK, res)
 }

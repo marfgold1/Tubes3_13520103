@@ -10,7 +10,7 @@ type DNACheck struct {
 	Pengguna string
 	Penyakit string
 	Result   bool
-	Match    int
+	Match    float64
 }
 
 func init() {

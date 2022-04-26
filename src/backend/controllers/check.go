@@ -51,7 +51,8 @@ func createCheck(c echo.Context) error {
 	p := models.DNACheck{}
 	p.Penyakit = c.FormValue("penyakit")
 	p.Pengguna = c.FormValue("pengguna")
-	if p.Penyakit == "" || p.Pengguna == "" {
+	method := c.FormValue("method")
+	if p.Penyakit == "" || p.Pengguna == "" || !(method == "kmp" || method == "bm") {
 		return c.JSON(http.StatusBadRequest, checkBadRequest)
 	}
 
@@ -90,9 +91,14 @@ func createCheck(c echo.Context) error {
 		return err
 	}
 
-	res_idx, match := algo.BFMatch(dna_seq, dna_peny)
+	var res_idx, match int
+	if method == "kmp" {
+		res_idx, match = algo.KMPMatch(dna_seq, dna_peny)
+	} else {
+		res_idx, match = algo.BMMatch(dna_seq, dna_peny)
+	}
 	p.Result = res_idx != -1
-	p.Match = match
+	p.Match = float64(match) / float64(len(dna_peny)) * 100.0
 
 	res := databases.DB.Create(&p)
 	if res.Error != nil {
@@ -110,9 +116,8 @@ func updateCheck(c echo.Context) error {
 		return c.JSON(http.StatusNotFound, checkNotFound)
 	}
 
-	p.Penyakit = c.FormValue("penyakit")
 	p.Pengguna = c.FormValue("pengguna")
-	if p.Penyakit == "" || p.Pengguna == "" {
+	if p.Pengguna == "" {
 		return c.JSON(http.StatusBadRequest, checkBadRequest)
 	}
 
