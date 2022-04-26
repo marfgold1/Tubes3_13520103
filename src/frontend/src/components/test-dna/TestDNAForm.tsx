@@ -127,21 +127,21 @@ const TestDNAForm = () => {
               </Form.Group>
               <Form.Group className="mb-3" controlId="formPenyakit">
                 <Form.Label>Metode</Form.Label>
-                <DropdownButton
-                  id="dropdown-basic-button"
-                  title={method ? method : "Pilih Metode Test"}
-                >
-                  {["kmp", "bm"].map((method: string, index: number) => {
-                    return (
-                      <Dropdown.Item
-                        key={index}
-                        onClick={() => setMethod(method)}
-                      >
-                        {method}
-                      </Dropdown.Item>
-                    );
-                  })}
-                </DropdownButton>
+                {["kmp", "bm"].map((method: string, index: number) => {
+                  return (
+                    <Form.Check key={index} className="mb-1">
+                      <Form.Check.Input
+                        type="radio"
+                        name="formMethod"
+                        className={styles.radioBtnInput}
+                        onChange={() => setMethod(method)}
+                      />
+                      <Form.Check.Label className="mx-1">
+                        {method.toUpperCase()}
+                      </Form.Check.Label>
+                    </Form.Check>
+                  );
+                })}
               </Form.Group>
               <div className="d-flex justify-content-center">
                 <Button
