@@ -16,10 +16,6 @@ const Navbar = () => {
         <Link href="/search">
           <a className="nav-item nav-link">Search</a>
         </Link>
-
-        {/* <Nav.Link href="/">Add Penyakit</Nav.Link>
-        <Nav.Link href="/test-dna">Test DNA</Nav.Link>
-        <Nav.Link href="/search">Search</Nav.Link> */}
       </Nav>
     </NavBS>
   );
