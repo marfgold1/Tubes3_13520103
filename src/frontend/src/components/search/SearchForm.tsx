@@ -83,10 +83,7 @@ const SearchForm = () => {
     } ${year} ${year}-${month + 1}-${day} ${day}-${month + 1}-${year}`;
   };
 
-  const onQueryChange = (e: React.ChangeEvent<any>) => {
-    const newQuery = e.target.value;
-    setQuery(newQuery);
-
+  const updateRes = (newQuery: string) => {
     const allRegex = newQuery.split(" ").map((query: string) => {
       return new RegExp(query, "i");
     });
@@ -101,7 +98,32 @@ const SearchForm = () => {
     setResults(filteredResults);
   };
 
+  const onQueryChange = (e: React.ChangeEvent<any>) => {
+    const newQuery = e.target.value;
+    setQuery(newQuery);
+    updateRes(newQuery);
+  };
+
   const onTypeChange = useDebouncedCallback(onQueryChange, 1000);
+
+  const deleteRes = async (id: number) => {
+    const { res, error } = await new ApiSrv(`check/id=${id}`).delete();
+
+    if (error) {
+      setAlert({
+        header: "Error",
+        content: error,
+        variant: "danger",
+      });
+      setShowAlert(true);
+    } else {
+      await fetchData();
+    }
+  };
+
+  useEffect(() => {
+    updateRes(query);
+  }, [data]);
 
   return (
     <div className={styles.container + " d-flex flex-column"}>
@@ -141,9 +163,14 @@ const SearchForm = () => {
             }
           >
             {results.map((result, idx) => {
-              console.log("result", result);
-              console.log("idx", idx);
-              return <SearchResWithIndex data={result} key={idx} idx={idx} />;
+              return (
+                <SearchResWithIndex
+                  data={result}
+                  key={idx}
+                  idx={idx}
+                  onDelete={deleteRes}
+                />
+              );
             })}
           </div>
         </>

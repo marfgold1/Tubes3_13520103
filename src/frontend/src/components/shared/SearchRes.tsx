@@ -33,8 +33,6 @@ const SearchRes = ({
     return `${day} ${monthNamesIdn[month]} ${year}`;
   };
 
-  console.log("SEARCH RES", data);
-
   return (
     <Container className={"text-center " + className}>
       <Row>

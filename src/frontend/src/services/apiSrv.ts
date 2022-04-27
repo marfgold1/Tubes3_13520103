@@ -18,7 +18,6 @@ class ApiSrv {
         },
         responseType: "json",
       });
-      console.log(res);
       return { res, error: null };
     } catch (error) {
       console.log(error);
@@ -38,9 +37,25 @@ class ApiSrv {
         data: props,
         responseType: "json",
       });
-      console.log(res);
       return { res, error: null };
     } catch (error: any) {
+      console.log(error);
+      return { res: null, error: this._formatError(error) };
+    }
+  }
+
+  async delete() {
+    try {
+      const res = await axios({
+        method: "DELETE",
+        url: this.API_URL + this.path,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
+        responseType: "json",
+      });
+      return { res, error: null };
+    } catch (error) {
       console.log(error);
       return { res: null, error: this._formatError(error) };
     }

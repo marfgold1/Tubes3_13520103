@@ -6,7 +6,6 @@ import { Navbar as NavBS, Nav } from "react-bootstrap";
 
 const Navbar = () => {
   const router = useRouter();
-  console.log("router", router);
 
   const routes = [
     {
