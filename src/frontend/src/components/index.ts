@@ -4,6 +4,7 @@ import TestDNAForm from "./test-dna/TestDNAForm";
 import SearchForm from "./search/SearchForm";
 import SearchRes from "./shared/SearchRes";
 import SearchResWithIndex from "./shared/SearchResWithIndex";
+import AlertDismissible from "./shared/AlertDismissible";
 
 export {
   Navbar,
@@ -12,4 +13,5 @@ export {
   SearchForm,
   SearchRes,
   SearchResWithIndex,
+  AlertDismissible,
 };

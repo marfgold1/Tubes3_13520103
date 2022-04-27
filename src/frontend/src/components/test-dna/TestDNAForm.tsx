@@ -10,7 +10,7 @@ import { ApiSrv } from "../../services";
 import ITestDNARes from "../../interface/ITestDNARes";
 import ISearchRes from "../../interface/ISearchRes";
 import styles from "./TestDNAForm.module.css";
-import { SearchRes } from "..";
+import { SearchRes, AlertDismissible } from "..";
 
 const TestDNAForm = () => {
   const [name, setName] = useState<string>("");
@@ -20,6 +20,16 @@ const TestDNAForm = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [listPenyakit, setListPenyakit] = useState<string[]>([]);
   const [method, setMethod] = useState<string>("");
+  const [showAlert, setShowAlert] = useState<boolean>(false);
+  const [alert, setAlert] = useState<{
+    header: string;
+    content: string[];
+    variant: string;
+  }>({
+    header: "",
+    content: [""],
+    variant: "danger",
+  });
 
   const inputFile = useRef<HTMLInputElement>(null);
 
@@ -29,13 +39,20 @@ const TestDNAForm = () => {
 
   const getListPenyakit = async () => {
     setLoading(true);
-    const res = await new ApiSrv("penyakit/").get();
+    const { res, error } = await new ApiSrv("penyakit/").get();
     setLoading(false);
 
     if (res) {
       const lst = res.data.map((datum: ITestDNARes) => datum.Penyakit);
       console.log(lst);
       setListPenyakit(lst);
+    } else {
+      setAlert({
+        header: "Error",
+        content: error,
+        variant: "danger",
+      });
+      setShowAlert(true);
     }
   };
 
@@ -59,11 +76,18 @@ const TestDNAForm = () => {
       formData.append("penyakit", prediction);
       formData.append("method", method);
 
-      const res = await new ApiSrv("check/").post(formData);
+      const { res, error } = await new ApiSrv("check/").post(formData);
       if (res) {
         const data: ISearchRes = res.data;
         console.log("res", res);
         setResult(data);
+      } else {
+        setAlert({
+          header: "Error",
+          content: error,
+          variant: "danger",
+        });
+        setShowAlert(true);
       }
     }
 
@@ -79,6 +103,15 @@ const TestDNAForm = () => {
 
   return (
     <div className={styles.testDNAContainer}>
+      {showAlert && (
+        <AlertDismissible
+          header={alert.header}
+          content={alert.content}
+          show={showAlert}
+          setClose={() => setShowAlert(false)}
+          variant={alert.variant}
+        />
+      )}
       {loading ? (
         <div className="d-flex justify-content-center align-items-center h-100">
           <Spinner animation="border" variant="primary" />

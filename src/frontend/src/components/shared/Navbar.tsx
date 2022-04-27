@@ -1,21 +1,45 @@
 import React from "react";
 import Link from "next/link";
 import styles from "./Navbar.module.css";
-import { Navbar as NavBS, Container, Nav } from "react-bootstrap";
+import { useRouter } from "next/router";
+import { Navbar as NavBS, Nav } from "react-bootstrap";
 
 const Navbar = () => {
+  const router = useRouter();
+  console.log("router", router);
+
+  const routes = [
+    {
+      label: "Add Penyakit",
+      href: "/",
+    },
+    {
+      label: "Test DNA",
+      href: "/test-dna",
+    },
+    {
+      label: "Search",
+      href: "/search",
+    },
+  ];
+
   return (
-    <NavBS bg="dark" variant="dark" className="mb-3 justify-content-center">
+    <NavBS bg="primary" variant="dark" className="mb-3 justify-content-center">
       <Nav className="mx-2">
-        <Link href="/">
-          <a className="nav-item nav-link">Home</a>
-        </Link>
-        <Link href="/test-dna">
-          <a className="nav-item nav-link">Test DNA</a>
-        </Link>
-        <Link href="/search">
-          <a className="nav-item nav-link">Search</a>
-        </Link>
+        {routes.map((route, idx) => {
+          return (
+            <Link href={route.href} key={idx}>
+              <a
+                className={
+                  "nav-item nav-link mx-2 " +
+                  (route.href === router.pathname ? "active" : "")
+                }
+              >
+                {route.label}
+              </a>
+            </Link>
+          );
+        })}
       </Nav>
     </NavBS>
   );

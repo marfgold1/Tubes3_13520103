@@ -2,10 +2,22 @@ import React, { useState, useRef } from "react";
 import styles from "./AddPenyakit.module.css";
 import { ApiSrv } from "../../services";
 import { Form, Button } from "react-bootstrap";
+import { AlertDismissible } from "..";
 
 const AddPenyakit = () => {
   const [penyakit, setPenyakit] = useState<string>("");
   const [fileDNA, setFileDNA] = useState<File | undefined>(undefined);
+  const [showAlert, setShowAlert] = useState<boolean>(false);
+  const [alert, setAlert] = useState<{
+    header: string;
+    content: string[];
+    variant: string;
+  }>({
+    header: "",
+    content: [""],
+    variant: "danger",
+  });
+
   const inputFile = useRef<HTMLInputElement>(null);
 
   const uploadFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,11 +38,22 @@ const AddPenyakit = () => {
       formData.append("penyakit", penyakit);
       formData.append("dna", fileDNA);
 
-      const res = await new ApiSrv("penyakit/").post(formData);
-      if (res) {
-        console.log("res", res);
-        alert("successfully add new penyakit");
+      const { res, error } = await new ApiSrv("penyakit/").post(formData);
+
+      if (error) {
+        setAlert({
+          header: "Error",
+          content: error,
+          variant: "danger",
+        });
+      } else {
+        setAlert({
+          header: "Success",
+          content: ["Successfully add penyakit"],
+          variant: "success",
+        });
       }
+      setShowAlert(true);
     }
 
     setPenyakit("");
@@ -42,37 +65,49 @@ const AddPenyakit = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <Form>
-        <div className={styles.topForm}>
-          <h2 className="text-center">Tambahkan Penyakit</h2>
-        </div>
-        <Form.Group className="mb-3" controlId="formNamaPenyakit">
-          <Form.Label>Nama Penyakit</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Masukkan penyakit"
-            value={penyakit}
-            onChange={(e) => setPenyakit(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Upload Sequence DNA</Form.Label>
-          <Form.Control type="file" onChange={uploadFile} ref={inputFile} />
-        </Form.Group>
-        <div className="d-flex justify-content-center">
-          <Button
-            variant="primary"
-            type="submit"
-            onClick={(e) => onSubmit(e)}
-            disabled={!fileDNA || !penyakit}
-            className="px-4"
-          >
-            Submit
-          </Button>
-        </div>
-      </Form>
-    </div>
+    <>
+      {showAlert && (
+        <AlertDismissible
+          header={alert.header}
+          content={alert.content}
+          show={showAlert}
+          setClose={() => setShowAlert(false)}
+          variant={alert.variant}
+        />
+      )}
+
+      <div className={styles.container}>
+        <Form>
+          <div className={styles.topForm}>
+            <h2 className="text-center">Tambahkan Penyakit</h2>
+          </div>
+          <Form.Group className="mb-3" controlId="formNamaPenyakit">
+            <Form.Label>Nama Penyakit</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Masukkan penyakit"
+              value={penyakit}
+              onChange={(e) => setPenyakit(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Upload Sequence DNA</Form.Label>
+            <Form.Control type="file" onChange={uploadFile} ref={inputFile} />
+          </Form.Group>
+          <div className="d-flex justify-content-center">
+            <Button
+              variant="primary"
+              type="submit"
+              onClick={(e) => onSubmit(e)}
+              disabled={!fileDNA || !penyakit}
+              className="px-4"
+            >
+              Submit
+            </Button>
+          </div>
+        </Form>
+      </div>
+    </>
   );
 };
 

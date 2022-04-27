@@ -19,11 +19,10 @@ class ApiSrv {
         responseType: "json",
       });
       console.log(res);
-      return res;
+      return { res, error: null };
     } catch (error) {
       console.log(error);
-      alert(error);
-      return null;
+      return { res: null, error: this._formatError(error) };
     }
   }
 
@@ -40,34 +39,34 @@ class ApiSrv {
         responseType: "json",
       });
       console.log(res);
-      return res;
+      return { res, error: null };
     } catch (error: any) {
-      console.log("JSON ERROR");
-      console.log(error.toJSON());
-      if (error.response) {
-        console.log("RESPONSE ERROR");
-        console.log(error.response);
-        console.log(error.response.data);
-        console.log(error.response.status);
-        console.log(error.response.headers);
-        alert(
-          `Got an error from server:\n
-          - Message: "${error.response.data.message}" 
-          - Status: ${error.response.status}`
-        );
-      } else if (error.request) {
-        console.log("REQUEST ERROR");
-        alert(
-          `Got an error when trying to connect to server:\n
-          - Message: "${error.request}"\n
-          `
-        );
-        console.log(error.request);
-      } else {
-        alert("Got an unknown error with message: " + error.message);
-        console.log("Error", error.message);
-      }
-      return null;
+      console.log(error);
+      return { res: null, error: this._formatError(error) };
+    }
+  }
+
+  _formatError(error: any) {
+    console.log("JSON ERROR");
+    console.log(error.toJSON());
+    if (error.response) {
+      console.log("RESPONSE ERROR");
+      console.log(error.response);
+      return [
+        "Got an error from server:",
+        `- Message: "${error.response.data.message}`,
+        `- Status: ${error.response.status}`,
+      ];
+    } else if (error.request) {
+      console.log("REQUEST ERROR");
+      console.log(error.request);
+      return [
+        "Got an error when trying to connect to server:",
+        `- Message: "${error.request}"`,
+      ];
+    } else {
+      console.log("Error", error.message);
+      return ["Got an unknown error with message: " + error.message];
     }
   }
 }

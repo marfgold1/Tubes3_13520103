@@ -4,13 +4,23 @@ import { Form, Spinner } from "react-bootstrap";
 import { ApiSrv } from "../../services";
 import ISearchRes from "../../interface/ISearchRes";
 import styles from "./SearchForm.module.css";
-import { SearchResWithIndex } from "..";
+import { SearchResWithIndex, AlertDismissible } from "..";
 
 const SearchForm = () => {
   const [query, setQuery] = useState("");
   const [data, setData] = useState<ISearchRes[]>([]);
   const [results, setResults] = useState<ISearchRes[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [showAlert, setShowAlert] = useState<boolean>(false);
+  const [alert, setAlert] = useState<{
+    header: string;
+    content: string[];
+    variant: string;
+  }>({
+    header: "",
+    content: [""],
+    variant: "danger",
+  });
 
   useEffect(() => {
     fetchData();
@@ -18,11 +28,18 @@ const SearchForm = () => {
 
   const fetchData = async () => {
     setLoading(true);
-    const res = await new ApiSrv("check/").get();
+    const { res, error } = await new ApiSrv("check/").get();
     setLoading(false);
 
     if (res) {
       setData(res.data);
+    } else {
+      setAlert({
+        header: "Error",
+        content: error,
+        variant: "danger",
+      });
+      setShowAlert(true);
     }
   };
 
@@ -66,30 +83,6 @@ const SearchForm = () => {
     } ${year} ${year}-${month + 1}-${day} ${day}-${month + 1}-${year}`;
   };
 
-  const formatData = (datum: ISearchRes) => {
-    const monthNamesIdn = [
-      "Januari",
-      "Februari",
-      "Maret",
-      "April",
-      "Mei",
-      "Juni",
-      "Juli",
-      "Agustus",
-      "September",
-      "Oktober",
-      "November",
-      "Desember",
-    ];
-
-    const date = new Date(datum.CreatedAt);
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    const day = date.getDate();
-
-    return `${datum.Pengguna} ${datum.Penyakit} ${day} ${monthNamesIdn[month]} ${year} ${datum.Result} ${datum.Match}%`;
-  };
-
   const onQueryChange = (e: React.ChangeEvent<any>) => {
     const newQuery = e.target.value;
     setQuery(newQuery);
@@ -112,6 +105,15 @@ const SearchForm = () => {
 
   return (
     <div className={styles.container + " d-flex flex-column"}>
+      {showAlert && (
+        <AlertDismissible
+          header={alert.header}
+          content={alert.content}
+          show={showAlert}
+          setClose={() => setShowAlert(false)}
+          variant={alert.variant}
+        />
+      )}
       {loading ? (
         <div className="d-flex justify-content-center align-items-center h-100">
           <Spinner animation="border" variant="primary" />

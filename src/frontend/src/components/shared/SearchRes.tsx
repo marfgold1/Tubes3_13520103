@@ -36,7 +36,7 @@ const SearchRes = ({
   console.log("SEARCH RES", data);
 
   return (
-    <Container className="text-center">
+    <Container className={"text-center " + className}>
       <Row>
         <Col
           className={
@@ -80,7 +80,7 @@ const SearchRes = ({
             (data.Result ? "" : styles.false)
           }
         >
-          {data.Match + "%"}
+          {data.Match.toFixed(2) + "%"}
         </Col>
         <Col
           className={
