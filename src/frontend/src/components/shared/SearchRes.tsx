@@ -1,6 +1,7 @@
 import ISearchRes from "../../interface/ISearchRes";
 import styles from "./SearchRes.module.css";
 import { Row, Col, Container } from "react-bootstrap";
+import { useMediaQuery } from "usehooks-ts";
 
 const SearchRes = ({
   data,
@@ -9,6 +10,8 @@ const SearchRes = ({
   data: ISearchRes;
   className?: string | undefined;
 }) => {
+  const bigScreen = useMediaQuery("(min-width: 768px)");
+
   const formatDate = (data: string) => {
     const monthNamesIdn = [
       "Januari",
@@ -35,63 +38,107 @@ const SearchRes = ({
 
   return (
     <Container className={"text-center " + className}>
-      <Row>
-        <Col
-          className={
-            styles.itemContainer +
-            " " +
-            styles.grow1 +
-            " " +
-            (data.Result ? "" : styles.false)
-          }
-        >
-          {formatDate(data.CreatedAt)}
-        </Col>
-        <Col
-          className={
-            styles.itemContainer +
-            " " +
-            styles.grow2 +
-            " " +
-            (data.Result ? "" : styles.false)
-          }
-        >
-          {data.Pengguna}
-        </Col>
-        <Col
-          className={
-            styles.itemContainer +
-            " " +
-            styles.grow1 +
-            " " +
-            (data.Result ? "" : styles.false)
-          }
-        >
-          {data.Penyakit}{" "}
-        </Col>
-        <Col
-          className={
-            styles.itemContainer +
-            " " +
-            styles.grow0 +
-            " " +
-            (data.Result ? "" : styles.false)
-          }
-        >
-          {data.Match.toFixed(2) + "%"}
-        </Col>
-        <Col
-          className={
-            styles.itemContainer +
-            " " +
-            styles.grow0 +
-            " " +
-            (data.Result ? "" : styles.false)
-          }
-        >
-          {data.Result ? "True" : "False"}
-        </Col>
-      </Row>
+      {bigScreen ? (
+        <Row className={styles.rowWrapper + " justify-content-center"}>
+          <Col
+            className={
+              styles.itemContainer +
+              " " +
+              styles.grow1 +
+              " " +
+              (data.Result ? "" : styles.false)
+            }
+          >
+            {formatDate(data.CreatedAt)}
+          </Col>
+          <Col
+            className={
+              styles.itemContainer +
+              " " +
+              styles.grow2 +
+              " " +
+              (data.Result ? "" : styles.false)
+            }
+          >
+            {data.Pengguna}
+          </Col>
+          <Col
+            className={
+              styles.itemContainer +
+              " " +
+              styles.grow1 +
+              " " +
+              (data.Result ? "" : styles.false)
+            }
+          >
+            {data.Penyakit}{" "}
+          </Col>
+          <Col
+            className={
+              styles.itemContainer +
+              " " +
+              styles.grow0 +
+              " " +
+              (data.Result ? "" : styles.false)
+            }
+          >
+            {data.Match.toFixed(2) + "%"}
+          </Col>
+          <Col
+            className={
+              styles.itemContainer +
+              " " +
+              styles.grow0 +
+              " " +
+              (data.Result ? "" : styles.false)
+            }
+          >
+            {data.Result ? "True" : "False"}
+          </Col>
+        </Row>
+      ) : (
+        <>
+          <Row className="mb-2">
+            <Col
+              className={
+                styles.itemContainer + " " + (data.Result ? "" : styles.false)
+              }
+            >
+              {formatDate(data.CreatedAt)}
+            </Col>
+            <Col
+              className={
+                styles.itemContainer + " " + (data.Result ? "" : styles.false)
+              }
+            >
+              {data.Pengguna}
+            </Col>{" "}
+          </Row>
+          <Row className="mt-2">
+            <Col
+              className={
+                styles.itemContainer + " " + (data.Result ? "" : styles.false)
+              }
+            >
+              {data.Penyakit}{" "}
+            </Col>
+            <Col
+              className={
+                styles.itemContainer + " " + (data.Result ? "" : styles.false)
+              }
+            >
+              {data.Match.toFixed(2) + "%"}
+            </Col>
+            <Col
+              className={
+                styles.itemContainer + " " + (data.Result ? "" : styles.false)
+              }
+            >
+              {data.Result ? "True" : "False"}
+            </Col>
+          </Row>
+        </>
+      )}
     </Container>
   );
 };

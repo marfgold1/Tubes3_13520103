@@ -17,7 +17,12 @@ const SearchResWithIndex = ({
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <div className="d-flex justify-content-center my-2 w-100">
+    <div
+      className={
+        styles.container +
+        " d-flex justify-content-center my-2 w-100 align-items-center"
+      }
+    >
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
         <Modal.Title className="p-3 text-center">Are you sure?</Modal.Title>
         <Modal.Footer className="justify-content-between">
@@ -37,7 +42,10 @@ const SearchResWithIndex = ({
       </Modal>
       <div
         className={
-          styles.itemContainer + " me-2 " + (data.Result ? "" : styles.false)
+          styles.itemContainer +
+          " " +
+          (data.Result ? "" : styles.false) +
+          " d-flex justify-content-center align-items-center"
         }
       >
         {idx + 1 + "."}
@@ -45,7 +53,7 @@ const SearchResWithIndex = ({
       <SearchRes data={data} className={styles.grow2} />
       <Button
         variant="danger"
-        className="ms-2"
+        className={styles.btn}
         onClick={() => setShowModal(true)}
       >
         Delete

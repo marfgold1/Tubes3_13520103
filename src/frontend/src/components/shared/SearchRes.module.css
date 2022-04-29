@@ -3,6 +3,10 @@
   text-align: center;
 }
 
+.rowWrapper {
+  row-gap: 8px;
+}
+
 .itemContainer {
   background: #E0FFE0;
   border: 1px solid #000000;

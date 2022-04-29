@@ -80,7 +80,7 @@ const SearchForm = () => {
 
     return `${data.Pengguna} ${data.Penyakit} ${day} ${monthNames[month]} ${
       monthNamesIdn[month]
-    } ${year} ${year}-${month + 1}-${day} ${day}-${month + 1}-${year}`;
+    } ${year} ${year}-${month + 1}-${day} ${day}-${month + 1}-${year} ${data.Result ? "True" : "False"}`;
   };
 
   const updateRes = (newQuery: string) => {
