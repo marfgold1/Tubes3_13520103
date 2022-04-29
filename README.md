@@ -5,6 +5,15 @@
 > Aplikasi web yang dibangun adalah aplikasi yang memiliki beberapa fitur. Aplikasi ini dapat melakukan penambahan penyakit berdasarkan nama dan file sequence DNA penyakit tersebut. Penyakit-penyakit yang telah ditambahkan dapat dites terhadap sequence DNA dari pengguna dengan cara menggunggah nama pengguna, file sequence DNA, memilih penyakit dan memilih metode pengetesan. Hasilnya akan langsung ditampilkan apakah DNA pengguna memiliki kemiripan dengan DNA penyakit. Hasil-hasil pengetesan yang telah dilakukan dapat dilakukan pencarian berdasarkan query pengguna menggunakan regular expression.
 
 > Aplikasi ini memiliki berbagai manfaat. Dengan memiliki sequence DNA dari penyakit dan pengguna, kita dapat melakukan pengetesan seberapa beresiko pengguna mendapatkan penyakit yang dites. Hal ini akan membantu para pengguna untuk mendapatkan informasi lebih awal sebelum mendapatkan penyakit tersebut, ataupun penyakit menjadi parah. Informasi tersebut dapat digunakan untuk melakukan langkah-langkah medis preventif dari awal.
+## Informasi Umum
+Program ini dapat melakuakan test DNA antara pengguna dengan penyakit yang bertujuan untuk mendeteksi apakah pengguna tersebut menderita penyakit yang di-tes
+
+## Fitur Aplikasi
+- Menambahkan data DNA ke database
+- Melakukan pengetesan DNA pengguna dengan penyakit
+- Menampilkan persentase kemiripan DNA pengguna dengan DNA penyakit
+- Menampilkan riwayat pengetesan
+- Melakukan filter riwayat pengetesan
 
 ## Setup Program
 - Pastikan di komputer Anda telah terinstall bahasa Go, Node JS, dan MySQL
