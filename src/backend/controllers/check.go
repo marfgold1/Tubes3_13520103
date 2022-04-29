@@ -91,14 +91,19 @@ func createCheck(c echo.Context) error {
 		return err
 	}
 
-	var res_idx, match int
+	var match int
 	if method == "kmp" {
-		res_idx, match = algo.KMPMatch(dna_seq, dna_peny)
+		_, match = algo.KMPMatch(dna_seq, dna_peny)
 	} else {
-		res_idx, match = algo.BMMatch(dna_seq, dna_peny)
+		_, match = algo.BMMatch(dna_seq, dna_peny)
 	}
-	p.Result = res_idx != -1
 	p.Match = float64(match) / float64(len(dna_peny)) * 100.0
+
+	if p.Match >= 80.0 {
+		p.Result = true
+	} else {
+		p.Result = false
+	}
 
 	res := databases.DB.Create(&p)
 	if res.Error != nil {
