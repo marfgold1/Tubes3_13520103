@@ -2,6 +2,16 @@
 
 > Program ini ditujukan untuk memenuhi Tugas Besar Strategi Algoritma IF2211 tahun ajaran 2021/2022
 
+## Informasi Umum
+Program ini dapat melakuakan test DNA antara pengguna dengan penyakit yang bertujuan untuk mendeteksi apakah pengguna tersebut menderita penyakit yang di-tes
+
+## Fitur Aplikasi
+- Menambahkan data DNA ke database
+- Melakukan pengetesan DNA pengguna dengan penyakit
+- Menampilkan persentase kemiripan DNA pengguna dengan DNA penyakit
+- Menampilkan riwayat pengetesan
+- Melakukan filter riwayat pengetesan
+
 ## Setup Program
 - Pastikan di komputer Anda telah terinstall bahasa Go, Node JS, dan MySQL
 
