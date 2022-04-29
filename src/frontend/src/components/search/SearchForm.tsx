@@ -80,7 +80,9 @@ const SearchForm = () => {
 
     return `${data.Pengguna} ${data.Penyakit} ${day} ${monthNames[month]} ${
       monthNamesIdn[month]
-    } ${year} ${year}-${month + 1}-${day} ${day}-${month + 1}-${year} ${data.Result ? "True" : "False"}`;
+    } ${year} ${year}-${month + 1}-${day} ${day}-${month + 1}-${year} ${
+      data.Result ? "True" : "False"
+    }`;
   };
 
   const updateRes = (newQuery: string) => {
@@ -153,6 +155,11 @@ const SearchForm = () => {
                 onChange={(e) => {
                   setQuery(e.target.value);
                   onTypeChange(e);
+                }}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                  }
                 }}
               />
             </Form.Group>
